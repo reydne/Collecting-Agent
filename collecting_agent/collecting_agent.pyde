@@ -18,13 +18,28 @@ def setup():
     global food
     size(640, 360)
     velocity = PVector(0, 0)
+    velocityFood = PVector(0, 0)
     vehicle = Vehicle(width / 2, height / 2, velocity)
-    food = Food(width / 3, height / 3, velocity)
+    food = Food(width / 3, height / 3, velocityFood)
 
 def draw():
     background(255)
-    mouse = PVector(mouseX, mouseY)
+    #mouse = PVector(mouseX, mouseY)
     vehicle.update()
     vehicle.display()
     food.update()
     food.display()
+
+def keyTyped():
+    print(key)
+    if key == 'a':
+        vehicle.applyForce(PVector(-1, 0))
+    elif key == 'd':
+        vehicle.applyForce(PVector(1, 0))
+    elif key == 'w':
+        vehicle.applyForce(PVector(0, -1))
+    elif key == 's':
+        vehicle.applyForce(PVector(0, 1))
+
+def keyReleased():
+    vehicle.velocity = PVector(0, 0)
