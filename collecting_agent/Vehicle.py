@@ -42,6 +42,28 @@ class Vehicle():
         steer.limit(self.maxforce)  # Limit to maximum steering force
 
         self.applyForce(steer)
+        
+    # STEER = DESIRED MINUS VELOCITY
+    def boundaries(self, d):
+
+        desired = None
+
+        if self.position.x < d:
+            desired = PVector(self.maxspeed, self.velocity.y)
+        elif self.position.x > width - d:
+            desired = PVector(-self.maxspeed, self.velocity.y)
+
+        if self.position.y < d:
+            desired = PVector(self.velocity.x, self.maxspeed)
+        elif self.position.y > height - d:
+            desired = PVector(self.velocity.x, -self.maxspeed)
+
+        if desired:
+            desired.normalize()
+            desired.mult(self.maxspeed)
+            steer = desired - self.velocity
+            steer.limit(self.maxforce)
+            self.applyForce(steer)
 
     def display(self):
         # Draw a triangle rotated in the direction of velocity

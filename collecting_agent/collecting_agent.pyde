@@ -2,16 +2,14 @@
 # Daniel Shiffman
 # http://natureofcode.com
 #
-# Modified by Equipe 3
-
-# Draws a "vehicle" on the screen
-
-# Implements Craig Reynold's autonomous steering behaviors
-# One vehicle "seeks"
-# See: http://www.red3d.com/cwr/
+# Modified by  Equipe 3
 
 from Vehicle import Vehicle
 from Food import Food
+
+debug = True
+d = 25
+count_food = 0
 
 def setup():
     global vehicle, food
@@ -19,29 +17,44 @@ def setup():
     velocity = PVector(0, 0)
     velocityFood = PVector(0, 0)
     vehicle = Vehicle(width / 2, height / 2, velocity)
-    food = Food(random(width), random(height), velocityFood)
+    food = Food(random(width), random(height))
 
 def draw():
+    global count_food
+    count_food += food.update(vehicle)
+    #Draw the environment
     background(255)
-    #mouse = PVector(mouseX, mouseY)
+    if debug:
+        stroke(175)
+        noFill()
+        rectMode(CENTER)
+        rect(width / 2, height / 2, width - d * 2, height - d * 2)
+    
+    #To write text in environment
+    textSize(16)
+    textAlign(RIGHT)
+    text("Food: " + str(count_food), 70, 20)
+  
+    
+    #Update class
     vehicle.update()
     vehicle.display()
-    food.update()
     food.display()
+    vehicle.seek(food.position)
 
-def keyTyped():
-    print(key)
-    if key == 'a':
-        vehicle.applyForce(PVector(-1, 0))
-    elif key == 'd':
-        vehicle.applyForce(PVector(1, 0))
-    elif key == 'w':
-        vehicle.applyForce(PVector(0, -1))
-    elif key == 's':
-        vehicle.applyForce(PVector(0, 1))
+# def keyTyped():
+#     print(key)
+#     if key == 'a':
+#         vehicle.applyForce(PVector(-1, 0))
+#     elif key == 'd':
+#         vehicle.applyForce(PVector(1, 0))
+#     elif key == 'w':
+#         vehicle.applyForce(PVector(0, -1))
+#     elif key == 's':
+#         vehicle.applyForce(PVector(0, 1))
 
-def keyReleased():
-    vehicle.velocity = PVector(0, 0)
+# def keyReleased():
+#     vehicle.velocity = PVector(0, 0)
     
 #def count():
     
