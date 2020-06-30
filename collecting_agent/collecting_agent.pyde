@@ -14,13 +14,12 @@ from Vehicle import Vehicle
 from Food import Food
 
 def setup():
-    global vehicle
-    global food
+    global vehicle, food
     size(640, 360)
     velocity = PVector(0, 0)
     velocityFood = PVector(0, 0)
     vehicle = Vehicle(width / 2, height / 2, velocity)
-    food = Food(width / 3, height / 3, velocityFood)
+    food = Food(random(width), random(height), velocityFood)
 
 def draw():
     background(255)
@@ -43,3 +42,6 @@ def keyTyped():
 
 def keyReleased():
     vehicle.velocity = PVector(0, 0)
+    
+#def count():
+    
