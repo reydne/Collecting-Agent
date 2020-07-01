@@ -2,7 +2,7 @@
 # Daniel Shiffman
 # http://natureofcode.com
 #
-# Modified by  Equipe 3
+# Modified by  Equipe 3 - Moisés, Ricardo and Reydne
 
 from Vehicle import Vehicle
 from Food import Food
@@ -22,10 +22,11 @@ def setup():
 def draw():
     global count_food
     count_food += food.update(vehicle)
+    
     #Draw the environment
     background(255)
     if debug:
-        stroke(175)
+        stroke(250)
         noFill()
         rectMode(CENTER)
         rect(width / 2, height / 2, width - d * 2, height - d * 2)
@@ -35,26 +36,10 @@ def draw():
     textAlign(RIGHT)
     text("Food: " + str(count_food), 70, 20)
   
-    
     #Update class
     vehicle.update()
     vehicle.display()
     food.display()
     vehicle.seek(food.position)
 
-# def keyTyped():
-#     print(key)
-#     if key == 'a':
-#         vehicle.applyForce(PVector(-1, 0))
-#     elif key == 'd':
-#         vehicle.applyForce(PVector(1, 0))
-#     elif key == 'w':
-#         vehicle.applyForce(PVector(0, -1))
-#     elif key == 's':
-#         vehicle.applyForce(PVector(0, 1))
-
-# def keyReleased():
-#     vehicle.velocity = PVector(0, 0)
-    
-#def count():
     
