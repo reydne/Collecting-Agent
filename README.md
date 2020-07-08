@@ -3,4 +3,5 @@ The goal of this agent is collect elements in your ambient. The code of this  re
 
 # Figure
 
-![Agente v1](https://user-images.githubusercontent.com/28721925/86786396-52eb2600-c03a-11ea-91c6-c9cf1a72d75c.png)
+![gif](https://user-images.githubusercontent.com/28721925/86967222-ba8b9900-c140-11ea-8c07-f772a81cd15b.gif)
+
