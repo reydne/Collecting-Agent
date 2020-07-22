@@ -211,8 +211,10 @@ function draw() {
   endShape();
 
   if (current === end) {
+    var c_start = Math.floor(random(cols));
+    var r_start = Math.floor(random(rows));
+    start = grid[c_start][r_start];
 
-    start = end;
     total++;
 
     openSet = []

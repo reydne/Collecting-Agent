@@ -17,16 +17,10 @@ function removeFromArray(arr, elt) {
   }
 }
 
-// An educated guess of how far it is between two points
-function heuristic(a, b) {
-  var d = dist(a.i, a.j, b.i, b.j);
-  return d;
-}
-
 // How many columns and rows?
 var cols = 50;
 var rows = 50;
-
+var total = 0
 
 // This will be the 2D array
 var grid = new Array(cols);
@@ -34,7 +28,6 @@ var grid = new Array(cols);
 // Open and closed set
 var openSet = [];
 var closedSet = [];
-var total = 0;
 
 // Start and end
 var start;
@@ -47,8 +40,8 @@ var w, h;
 var path = [];
 
 function setup() {
-  createCanvas(500, 500);
-  console.log('Busca gulosa');
+  createCanvas(400, 400);
+  console.log('A*');
 
   // Grid cell size
   w = width / cols;
@@ -90,63 +83,52 @@ function draw() {
 
   // Am I still searching?
   if (openSet.length > 0) {
-    
-    // Best next option
-    var winner = 0;
-    current = openSet[0];
-    for (var i = 0; i < openSet.length; i++) {
-      if (openSet[i].f < openSet[winner].f) {
-        winner = i;
-      }
-    }
-    var current = openSet[winner];
-
+  
+    var current = openSet[0];
     // registration
     console.log(openSet);
 
     // Did I finish?
-    if (current === end) {
-      noLoop();
-      console.log("DONE!");
-      
-      var total_food = document.getElementById('total_food');
-      total++;
-      total_food.textContent = "Total: " + total;
-    }
+    if (current !== end) {
 
-    // Best option moves from openSet to closedSet
-    removeFromArray(openSet, current);
-    closedSet.push(current);
+      // Best option moves from openSet to closedSet
+      removeFromArray(openSet, current);
+      closedSet.push(current);
 
-    // Check all the neighbors
-    var neighbors = current.neighbors;
-    for (var i = 0; i < neighbors.length; i++) {
-      var neighbor = neighbors[i];
-
-      // Valid next spot?
-      if (!closedSet.includes(neighbor) && !neighbor.wall) {
-        var tempG = heuristic(neighbor, current);
-
-        // Is this a better path than before?
-        var newPath = false;
-        if (openSet.includes(neighbor)) {
-          if (tempG < neighbor.g) {
-            neighbor.g = tempG;
-            newPath = true;
-          }
-        } else {
-          neighbor.g = tempG;
-          newPath = true;
+      // Check all the neighbors
+      var neighbors = current.neighbors;
+      for (var i = 0; i < neighbors.length; i++) {
+        var neighbor = neighbors[i];
+        
+        // Valid next spot?
+        if (!closedSet.includes(neighbor) && !neighbor.wall) {
+          var tempG = current.g 
           openSet.push(neighbor);
+
+          // Is this a better path than before?
+          var newPath = true;
+          // if (openSet.includes(neighbor)) {
+            
+          //   if (tempG < neighbor.g) {
+          //     neighbor.g = tempG;
+          //     newPath = true;
+          //   }
+          // } else {
+          //   neighbor.g = tempG;
+          //   newPath = true;
+          // }
+
+          // Yes, it's a better path
+          //if (newPath) {
+            //neighbor.f = neighbor.g 
+            // neighbor.previous = current;
+            // openSet.push(neighbor);
+         // }
         }
 
-        // Yes, it's a better path
-        if (newPath) {
-          neighbor.h = heuristic(neighbor, end);
-          neighbor.f = neighbor.h;
-          neighbor.previous = current;
-        }
       }
+
+      console.log("DONE!");
     }
 
   // Uh oh, no solution
@@ -212,23 +194,32 @@ function draw() {
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   endShape();
 
-  // if (current === end) {
-  //   var c_start = Math.floor(random(cols));
-  //   var r_start = Math.floor(random(rows));
-  //   start = grid[c_start][r_start];
+  if (current === end) {
 
-  //   total++;
-  //   openSet = []
-  //   openSet.push(start);
-  //   closedSet = [];
+    var c_start = Math.floor(random(cols));
+    var r_start = Math.floor(random(rows));
+    start = grid[c_start][r_start];
 
-  //   var c_end = Math.floor(random(cols));
-  //   var r_end = Math.floor(random(rows));
-  //   end = grid[c_end][r_end];
-  //   while (end.wall){
-  //     c_end = Math.floor(random(cols));
-  //     r_end = Math.floor(random(rows));
-  //     end = grid[c_end][r_end];
-  // }
+    total++;
 
+    openSet = []
+    openSet.push(start);
+    closedSet = [];
+
+    var c_end = Math.floor(random(cols));
+    var r_end = Math.floor(random(rows));
+    end = grid[c_end][r_end];
+    while (end.wall){
+      c_end = Math.floor(random(cols));
+      r_end = Math.floor(random(rows));
+      end = grid[c_end][r_end];
+    }
+    
+    // capture the element of HTML
+    var total_food = document.getElementById('total_food');
+    console.log(total_food)
+    total_food.textContent = "Total: " + total
+    
+    console.log("DONE!");
+  }
 }
