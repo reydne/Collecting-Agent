@@ -40,7 +40,7 @@ var w, h;
 var path = [];
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(500, 500);
   console.log('A*');
 
   // Grid cell size
@@ -88,9 +88,6 @@ function draw() {
     // registration
     console.log(openSet);
 
-    // Did I finish?
-    if (current !== end) {
-
       // Best option moves from openSet to closedSet
       removeFromArray(openSet, current);
       closedSet.push(current);
@@ -101,36 +98,11 @@ function draw() {
         var neighbor = neighbors[i];
         
         // Valid next spot?
-        if (!closedSet.includes(neighbor) && !neighbor.wall) {
-          var tempG = current.g 
+        if (!closedSet.includes(neighbor) && !neighbor.wall) { 
           openSet.push(neighbor);
-
-          // Is this a better path than before?
-          var newPath = true;
-          // if (openSet.includes(neighbor)) {
-            
-          //   if (tempG < neighbor.g) {
-          //     neighbor.g = tempG;
-          //     newPath = true;
-          //   }
-          // } else {
-          //   neighbor.g = tempG;
-          //   newPath = true;
-          // }
-
-          // Yes, it's a better path
-          //if (newPath) {
-            //neighbor.f = neighbor.g 
-            // neighbor.previous = current;
-            // openSet.push(neighbor);
-         // }
         }
-
       }
-
-      console.log("DONE!");
-    }
-
+  
   // Uh oh, no solution
   } else {
     var total_food = document.getElementById('total_food');
@@ -194,6 +166,7 @@ function draw() {
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   endShape();
 
+  // Did I finish?
   if (current === end) {
 
     var c_start = Math.floor(random(cols));

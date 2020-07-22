@@ -40,7 +40,7 @@ var w, h;
 var path = [];
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(500, 500);
   console.log('A*');
 
   // Grid cell size
@@ -102,7 +102,6 @@ function draw() {
         
         // Valid next spot?
         if (!closedSet.includes(neighbor) && !neighbor.wall) {
-          //var tempG = current.g 
           openSet.unshift(neighbor);
         }
       }

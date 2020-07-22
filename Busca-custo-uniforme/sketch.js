@@ -105,16 +105,6 @@ function draw() {
     // registration
     console.log(openSet);
 
-    // Did I finish?
-    if (current === end) {
-      noLoop();
-      console.log("DONE!");
-      
-      var total_food = document.getElementById('total_food');
-      total++;
-      total_food.textContent = "Total: " + total;
-    }
-
     // Best option moves from openSet to closedSet
     removeFromArray(openSet, current);
     closedSet.push(current);
@@ -143,7 +133,6 @@ function draw() {
 
         // Yes, it's a better path
         if (newPath) {
-          //neighbor.h = heuristic(neighbor, end);
           neighbor.f = neighbor.g;
           neighbor.previous = current;
         }
@@ -213,6 +202,7 @@ function draw() {
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   endShape();
   
+  // Did I finish?
   if (current === end) {
 
     var c_start = Math.floor(random(cols));

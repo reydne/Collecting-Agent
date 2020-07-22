@@ -78,7 +78,6 @@ function setup() {
   var c_end = Math.floor(random(cols));
   var r_end = Math.floor(random(rows));
   end = grid[c_end][r_end];
-  //end = grid[cols - 1][rows - 1];
   start.wall = false;
   end.wall = false;
 
@@ -103,18 +102,6 @@ function draw() {
 
     // registration
     console.log(openSet);
-
-    // Did I finish?
-    if (current === end) {
-      noLoop();
-      console.log("DONE!");
-      
-      var total_food = document.getElementById('total_food');
-      total++;
-      total_food.textContent = "Total: " + total;
-    }
-
-    // Best option moves from openSet to closedSet
     removeFromArray(openSet, current);
     closedSet.push(current);
 
@@ -212,23 +199,30 @@ function draw() {
   vertex(end.i * w + w / 2, end.j * h + h / 2);
   endShape();
 
-  // if (current === end) {
-  //   var c_start = Math.floor(random(cols));
-  //   var r_start = Math.floor(random(rows));
-  //   start = grid[c_start][r_start];
+  if (current === end) {
+    var c_start = Math.floor(random(cols));
+    var r_start = Math.floor(random(rows));
+    start = grid[c_start][r_start];
 
-  //   total++;
-  //   openSet = []
-  //   openSet.push(start);
-  //   closedSet = [];
+    total++;
+    openSet = []
+    openSet.push(start);
+    closedSet = [];
 
-  //   var c_end = Math.floor(random(cols));
-  //   var r_end = Math.floor(random(rows));
-  //   end = grid[c_end][r_end];
-  //   while (end.wall){
-  //     c_end = Math.floor(random(cols));
-  //     r_end = Math.floor(random(rows));
-  //     end = grid[c_end][r_end];
-  // }
+    var c_end = Math.floor(random(cols));
+    var r_end = Math.floor(random(rows));
+    end = grid[c_end][r_end];
+    while (end.wall){
+      c_end = Math.floor(random(cols));
+      r_end = Math.floor(random(rows));
+      end = grid[c_end][r_end];
+    }
 
+    // capture the element of HTML
+    var total_food = document.getElementById('total_food');
+    console.log(total_food)
+    total_food.textContent = "Total: " + total
+    
+    console.log("DONE!");
+  }
 }
