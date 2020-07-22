@@ -105,10 +105,10 @@ function draw() {
 
 
     // Did I finish?
-    if (current === end) {
-      noLoop();
-      console.log("DONE!");
-    }
+    // if (current === end) {
+    //   //noLoop();
+    //   console.log("DONE!");
+    // }
 
     // Best option moves from openSet to closedSet
     removeFromArray(openSet, current);
@@ -184,6 +184,15 @@ function draw() {
     temp = temp.previous;
   }
 
+  // Drawing vehicle
+  noFill();
+  beginShape();
+  stroke(255, 0, 0);
+  strokeWeight(w / 2);
+  vertex(start.i * w + w / 2, start.j * h + h / 2);
+  vertex(start.i * w + w / 2, start.j * h + h / 2);
+  endShape();
+
   // Drawing path as continuous line
   noFill();
   stroke(255, 0, 200);
@@ -194,16 +203,7 @@ function draw() {
   }
   endShape();
 
-  // Vehicle
-  noFill();
-  beginShape();
-  stroke(255, 0, 0);
-  strokeWeight(w / 2);
-  vertex(start.i * w + w / 2, start.j * h + h / 2);
-  vertex(start.i * w + w / 2, start.j * h + h / 2);
-  endShape();
-
-  // food
+  //Drawing food
   beginShape();
   stroke(0, 255, 0);
   vertex(end.i * w + w / 2, end.j * h + h / 2);
@@ -215,15 +215,15 @@ function draw() {
     var r_start = Math.floor(random(rows));
     start = grid[c_start][r_start];
 
-    total++;
+    var c_end = Math.floor(random(cols));
+    var r_end = Math.floor(random(rows));
+    end = grid[c_end][r_end];
 
+    total++;
     openSet = []
     openSet.push(start);
     closedSet = [];
 
-    var c_end = Math.floor(random(cols));
-    var r_end = Math.floor(random(rows));
-    end = grid[c_end][r_end];
     while (end.wall){
       c_end = Math.floor(random(cols));
       r_end = Math.floor(random(rows));
